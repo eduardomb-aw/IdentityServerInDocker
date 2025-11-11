@@ -27,6 +27,7 @@ try
 
     // Add services to the container
     builder.Services.AddRazorPages();
+    builder.Services.AddHealthChecks();
 
     // Add IdentityServer4 with minimal required resources
     builder.Services.AddIdentityServer()
@@ -67,6 +68,7 @@ try
     
     app.UseAuthorization();
     app.MapRazorPages();
+    app.MapHealthChecks("/health");
 
     Log.Information("Starting IdentityServer4...");
     app.Run();

@@ -1,6 +1,590 @@
-<testsuites id="" name="" tests="1" failures="0" skipped="0" errors="0" time="2.49954">
-<testsuite name="adminui.spec.js" timestamp="2025-11-11T16:49:44.821Z" hostname="chromium" tests="1" failures="0" skipped="0" time="0.864" errors="0">
-<testcase name="IdentityServer + AdminUI Docker Setup › IdentityServer discovery link works correctly (Issue #5)" classname="adminui.spec.js" time="0.864">
+<testsuites id="" name="" tests="14" failures="14" skipped="0" errors="0" time="7.935733999999999">
+<testsuite name="adminui.spec.js" timestamp="2025-11-11T16:54:52.987Z" hostname="chromium" tests="2" failures="2" skipped="0" time="3.153" errors="0">
+<testcase name="IdentityServer + AdminUI Docker Setup › AdminUI Dashboard loads and displays correct information" classname="adminui.spec.js" time="2.152">
+<failure message="adminui.spec.js:9:7 AdminUI Dashboard loads and displays correct information" type="FAILURE">
+<![CDATA[  [chromium] › adminui.spec.js:9:7 › IdentityServer + AdminUI Docker Setup › AdminUI Dashboard loads and displays correct information 
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: locator('text=3')
+    Expected: visible
+    Error: strict mode violation: locator('text=3') resolved to 2 elements:
+        1) <h4>3</h4> aka getByRole('heading', { name: '3' })
+        2) <td>https://localhost:5003</td> aka getByRole('cell', { name: 'https://localhost:5003' })
+
+    Call log:
+      - Expect "toBeVisible" with timeout 10000ms
+      - waiting for locator('text=3')
+
+
+      16 |     
+      17 |     // Verify statistics cards
+    > 18 |     await expect(page.locator('text=3')).toBeVisible(); // Clients count
+         |                                          ^
+      19 |     await expect(page.locator('text=Clients')).toBeVisible();
+      20 |     await expect(page.locator('text=1')).toBeVisible(); // API Scopes count
+      21 |     await expect(page.locator('text=API Scopes')).toBeVisible();
+        at C:\Temp\repos\IdentityServerInDocker\tests\adminui.spec.js:18:42
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\adminui-IdentityServer-Adm-2e269-isplays-correct-information-chromium\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\adminui-IdentityServer-Adm-2e269-isplays-correct-information-chromium\error-context.md
+]]>
+</failure>
+<system-out>
+<![CDATA[
+[[ATTACHMENT|test-results\adminui-IdentityServer-Adm-2e269-isplays-correct-information-chromium\test-failed-1.png]]
+
+[[ATTACHMENT|test-results\adminui-IdentityServer-Adm-2e269-isplays-correct-information-chromium\error-context.md]]
+]]>
+</system-out>
+</testcase>
+<testcase name="IdentityServer + AdminUI Docker Setup › IdentityServer welcome page loads and has correct links" classname="adminui.spec.js" time="1.001">
+<failure message="adminui.spec.js:41:7 IdentityServer welcome page loads and has correct links" type="FAILURE">
+<![CDATA[  [chromium] › adminui.spec.js:41:7 › IdentityServer + AdminUI Docker Setup › IdentityServer welcome page loads and has correct links 
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: locator('text=Discovery Document')
+    Expected: visible
+    Error: strict mode violation: locator('text=Discovery Document') resolved to 2 elements:
+        1) <h5 class="card-title">Discovery Document</h5> aka getByRole('heading', { name: 'Discovery Document' })
+        2) <p class="card-text">View the OpenID Connect discovery document</p> aka getByText('View the OpenID Connect')
+
+    Call log:
+      - Expect "toBeVisible" with timeout 10000ms
+      - waiting for locator('text=Discovery Document')
+
+
+      49 |     
+      50 |     // Verify sections
+    > 51 |     await expect(page.locator('text=Discovery Document')).toBeVisible();
+         |                                                           ^
+      52 |     await expect(page.locator('text=View the OpenID Connect discovery document')).toBeVisible();
+      53 |     await expect(page.locator('text=Admin UI')).toBeVisible();
+      54 |     await expect(page.locator('text=Manage clients, resources, and configuration')).toBeVisible();
+        at C:\Temp\repos\IdentityServerInDocker\tests\adminui.spec.js:51:59
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\adminui-IdentityServer-Adm-e10ee-loads-and-has-correct-links-chromium\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\adminui-IdentityServer-Adm-e10ee-loads-and-has-correct-links-chromium\error-context.md
+]]>
+</failure>
+<system-out>
+<![CDATA[
+[[ATTACHMENT|test-results\adminui-IdentityServer-Adm-e10ee-loads-and-has-correct-links-chromium\test-failed-1.png]]
+
+[[ATTACHMENT|test-results\adminui-IdentityServer-Adm-e10ee-loads-and-has-correct-links-chromium\error-context.md]]
+]]>
+</system-out>
+</testcase>
+</testsuite>
+<testsuite name="adminui.spec.js" timestamp="2025-11-11T16:54:52.987Z" hostname="firefox" tests="2" failures="2" skipped="0" time="5.127" errors="0">
+<testcase name="IdentityServer + AdminUI Docker Setup › AdminUI Dashboard loads and displays correct information" classname="adminui.spec.js" time="2.299">
+<failure message="adminui.spec.js:9:7 AdminUI Dashboard loads and displays correct information" type="FAILURE">
+<![CDATA[  [firefox] › adminui.spec.js:9:7 › IdentityServer + AdminUI Docker Setup › AdminUI Dashboard loads and displays correct information 
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: locator('text=3')
+    Expected: visible
+    Error: strict mode violation: locator('text=3') resolved to 2 elements:
+        1) <h4>3</h4> aka getByRole('heading', { name: '3' })
+        2) <td>https://localhost:5003</td> aka getByRole('cell', { name: 'https://localhost:5003' })
+
+    Call log:
+      - Expect "toBeVisible" with timeout 10000ms
+      - waiting for locator('text=3')
+
+
+      16 |     
+      17 |     // Verify statistics cards
+    > 18 |     await expect(page.locator('text=3')).toBeVisible(); // Clients count
+         |                                          ^
+      19 |     await expect(page.locator('text=Clients')).toBeVisible();
+      20 |     await expect(page.locator('text=1')).toBeVisible(); // API Scopes count
+      21 |     await expect(page.locator('text=API Scopes')).toBeVisible();
+        at C:\Temp\repos\IdentityServerInDocker\tests\adminui.spec.js:18:42
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\adminui-IdentityServer-Adm-2e269-isplays-correct-information-firefox\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\adminui-IdentityServer-Adm-2e269-isplays-correct-information-firefox\error-context.md
+]]>
+</failure>
+<system-out>
+<![CDATA[
+[[ATTACHMENT|test-results\adminui-IdentityServer-Adm-2e269-isplays-correct-information-firefox\test-failed-1.png]]
+
+[[ATTACHMENT|test-results\adminui-IdentityServer-Adm-2e269-isplays-correct-information-firefox\error-context.md]]
+]]>
+</system-out>
+</testcase>
+<testcase name="IdentityServer + AdminUI Docker Setup › IdentityServer welcome page loads and has correct links" classname="adminui.spec.js" time="2.828">
+<failure message="adminui.spec.js:41:7 IdentityServer welcome page loads and has correct links" type="FAILURE">
+<![CDATA[  [firefox] › adminui.spec.js:41:7 › IdentityServer + AdminUI Docker Setup › IdentityServer welcome page loads and has correct links 
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: locator('text=Discovery Document')
+    Expected: visible
+    Error: strict mode violation: locator('text=Discovery Document') resolved to 2 elements:
+        1) <h5 class="card-title">Discovery Document</h5> aka getByRole('heading', { name: 'Discovery Document' })
+        2) <p class="card-text">View the OpenID Connect discovery document</p> aka getByText('View the OpenID Connect')
+
+    Call log:
+      - Expect "toBeVisible" with timeout 10000ms
+      - waiting for locator('text=Discovery Document')
+
+
+      49 |     
+      50 |     // Verify sections
+    > 51 |     await expect(page.locator('text=Discovery Document')).toBeVisible();
+         |                                                           ^
+      52 |     await expect(page.locator('text=View the OpenID Connect discovery document')).toBeVisible();
+      53 |     await expect(page.locator('text=Admin UI')).toBeVisible();
+      54 |     await expect(page.locator('text=Manage clients, resources, and configuration')).toBeVisible();
+        at C:\Temp\repos\IdentityServerInDocker\tests\adminui.spec.js:51:59
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\adminui-IdentityServer-Adm-e10ee-loads-and-has-correct-links-firefox\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\adminui-IdentityServer-Adm-e10ee-loads-and-has-correct-links-firefox\error-context.md
+]]>
+</failure>
+<system-out>
+<![CDATA[
+[[ATTACHMENT|test-results\adminui-IdentityServer-Adm-e10ee-loads-and-has-correct-links-firefox\test-failed-1.png]]
+
+[[ATTACHMENT|test-results\adminui-IdentityServer-Adm-e10ee-loads-and-has-correct-links-firefox\error-context.md]]
+]]>
+</system-out>
+</testcase>
+</testsuite>
+<testsuite name="adminui.spec.js" timestamp="2025-11-11T16:54:52.987Z" hostname="webkit" tests="2" failures="2" skipped="0" time="4.384" errors="0">
+<testcase name="IdentityServer + AdminUI Docker Setup › AdminUI Dashboard loads and displays correct information" classname="adminui.spec.js" time="2.72">
+<failure message="adminui.spec.js:9:7 AdminUI Dashboard loads and displays correct information" type="FAILURE">
+<![CDATA[  [webkit] › adminui.spec.js:9:7 › IdentityServer + AdminUI Docker Setup › AdminUI Dashboard loads and displays correct information 
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: locator('text=3')
+    Expected: visible
+    Error: strict mode violation: locator('text=3') resolved to 2 elements:
+        1) <h4>3</h4> aka getByRole('heading', { name: '3' })
+        2) <td>https://localhost:5003</td> aka getByRole('cell', { name: 'https://localhost:5003' })
+
+    Call log:
+      - Expect "toBeVisible" with timeout 10000ms
+      - waiting for locator('text=3')
+
+
+      16 |     
+      17 |     // Verify statistics cards
+    > 18 |     await expect(page.locator('text=3')).toBeVisible(); // Clients count
+         |                                          ^
+      19 |     await expect(page.locator('text=Clients')).toBeVisible();
+      20 |     await expect(page.locator('text=1')).toBeVisible(); // API Scopes count
+      21 |     await expect(page.locator('text=API Scopes')).toBeVisible();
+        at C:\Temp\repos\IdentityServerInDocker\tests\adminui.spec.js:18:42
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\adminui-IdentityServer-Adm-2e269-isplays-correct-information-webkit\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\adminui-IdentityServer-Adm-2e269-isplays-correct-information-webkit\error-context.md
+]]>
+</failure>
+<system-out>
+<![CDATA[
+[[ATTACHMENT|test-results\adminui-IdentityServer-Adm-2e269-isplays-correct-information-webkit\test-failed-1.png]]
+
+[[ATTACHMENT|test-results\adminui-IdentityServer-Adm-2e269-isplays-correct-information-webkit\error-context.md]]
+]]>
+</system-out>
+</testcase>
+<testcase name="IdentityServer + AdminUI Docker Setup › IdentityServer welcome page loads and has correct links" classname="adminui.spec.js" time="1.664">
+<failure message="adminui.spec.js:41:7 IdentityServer welcome page loads and has correct links" type="FAILURE">
+<![CDATA[  [webkit] › adminui.spec.js:41:7 › IdentityServer + AdminUI Docker Setup › IdentityServer welcome page loads and has correct links 
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: locator('text=Discovery Document')
+    Expected: visible
+    Error: strict mode violation: locator('text=Discovery Document') resolved to 2 elements:
+        1) <h5 class="card-title">Discovery Document</h5> aka getByRole('heading', { name: 'Discovery Document' })
+        2) <p class="card-text">View the OpenID Connect discovery document</p> aka getByText('View the OpenID Connect')
+
+    Call log:
+      - Expect "toBeVisible" with timeout 10000ms
+      - waiting for locator('text=Discovery Document')
+
+
+      49 |     
+      50 |     // Verify sections
+    > 51 |     await expect(page.locator('text=Discovery Document')).toBeVisible();
+         |                                                           ^
+      52 |     await expect(page.locator('text=View the OpenID Connect discovery document')).toBeVisible();
+      53 |     await expect(page.locator('text=Admin UI')).toBeVisible();
+      54 |     await expect(page.locator('text=Manage clients, resources, and configuration')).toBeVisible();
+        at C:\Temp\repos\IdentityServerInDocker\tests\adminui.spec.js:51:59
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\adminui-IdentityServer-Adm-e10ee-loads-and-has-correct-links-webkit\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\adminui-IdentityServer-Adm-e10ee-loads-and-has-correct-links-webkit\error-context.md
+]]>
+</failure>
+<system-out>
+<![CDATA[
+[[ATTACHMENT|test-results\adminui-IdentityServer-Adm-e10ee-loads-and-has-correct-links-webkit\test-failed-1.png]]
+
+[[ATTACHMENT|test-results\adminui-IdentityServer-Adm-e10ee-loads-and-has-correct-links-webkit\error-context.md]]
+]]>
+</system-out>
+</testcase>
+</testsuite>
+<testsuite name="adminui.spec.js" timestamp="2025-11-11T16:54:52.987Z" hostname="Mobile Chrome" tests="2" failures="2" skipped="0" time="3.201" errors="0">
+<testcase name="IdentityServer + AdminUI Docker Setup › AdminUI Dashboard loads and displays correct information" classname="adminui.spec.js" time="2.165">
+<failure message="adminui.spec.js:9:7 AdminUI Dashboard loads and displays correct information" type="FAILURE">
+<![CDATA[  [Mobile Chrome] › adminui.spec.js:9:7 › IdentityServer + AdminUI Docker Setup › AdminUI Dashboard loads and displays correct information 
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: locator('text=3')
+    Expected: visible
+    Error: strict mode violation: locator('text=3') resolved to 2 elements:
+        1) <h4>3</h4> aka getByRole('heading', { name: '3' })
+        2) <td>https://localhost:5003</td> aka getByRole('cell', { name: 'https://localhost:5003' })
+
+    Call log:
+      - Expect "toBeVisible" with timeout 10000ms
+      - waiting for locator('text=3')
+
+
+      16 |     
+      17 |     // Verify statistics cards
+    > 18 |     await expect(page.locator('text=3')).toBeVisible(); // Clients count
+         |                                          ^
+      19 |     await expect(page.locator('text=Clients')).toBeVisible();
+      20 |     await expect(page.locator('text=1')).toBeVisible(); // API Scopes count
+      21 |     await expect(page.locator('text=API Scopes')).toBeVisible();
+        at C:\Temp\repos\IdentityServerInDocker\tests\adminui.spec.js:18:42
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\adminui-IdentityServer-Adm-2e269-isplays-correct-information-Mobile-Chrome\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\adminui-IdentityServer-Adm-2e269-isplays-correct-information-Mobile-Chrome\error-context.md
+]]>
+</failure>
+<system-out>
+<![CDATA[
+[[ATTACHMENT|test-results\adminui-IdentityServer-Adm-2e269-isplays-correct-information-Mobile-Chrome\test-failed-1.png]]
+
+[[ATTACHMENT|test-results\adminui-IdentityServer-Adm-2e269-isplays-correct-information-Mobile-Chrome\error-context.md]]
+]]>
+</system-out>
+</testcase>
+<testcase name="IdentityServer + AdminUI Docker Setup › IdentityServer welcome page loads and has correct links" classname="adminui.spec.js" time="1.036">
+<failure message="adminui.spec.js:41:7 IdentityServer welcome page loads and has correct links" type="FAILURE">
+<![CDATA[  [Mobile Chrome] › adminui.spec.js:41:7 › IdentityServer + AdminUI Docker Setup › IdentityServer welcome page loads and has correct links 
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: locator('text=Discovery Document')
+    Expected: visible
+    Error: strict mode violation: locator('text=Discovery Document') resolved to 2 elements:
+        1) <h5 class="card-title">Discovery Document</h5> aka getByRole('heading', { name: 'Discovery Document' })
+        2) <p class="card-text">View the OpenID Connect discovery document</p> aka getByText('View the OpenID Connect')
+
+    Call log:
+      - Expect "toBeVisible" with timeout 10000ms
+      - waiting for locator('text=Discovery Document')
+
+
+      49 |     
+      50 |     // Verify sections
+    > 51 |     await expect(page.locator('text=Discovery Document')).toBeVisible();
+         |                                                           ^
+      52 |     await expect(page.locator('text=View the OpenID Connect discovery document')).toBeVisible();
+      53 |     await expect(page.locator('text=Admin UI')).toBeVisible();
+      54 |     await expect(page.locator('text=Manage clients, resources, and configuration')).toBeVisible();
+        at C:\Temp\repos\IdentityServerInDocker\tests\adminui.spec.js:51:59
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\adminui-IdentityServer-Adm-e10ee-loads-and-has-correct-links-Mobile-Chrome\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\adminui-IdentityServer-Adm-e10ee-loads-and-has-correct-links-Mobile-Chrome\error-context.md
+]]>
+</failure>
+<system-out>
+<![CDATA[
+[[ATTACHMENT|test-results\adminui-IdentityServer-Adm-e10ee-loads-and-has-correct-links-Mobile-Chrome\test-failed-1.png]]
+
+[[ATTACHMENT|test-results\adminui-IdentityServer-Adm-e10ee-loads-and-has-correct-links-Mobile-Chrome\error-context.md]]
+]]>
+</system-out>
+</testcase>
+</testsuite>
+<testsuite name="adminui.spec.js" timestamp="2025-11-11T16:54:52.987Z" hostname="Mobile Safari" tests="2" failures="2" skipped="0" time="4.089" errors="0">
+<testcase name="IdentityServer + AdminUI Docker Setup › AdminUI Dashboard loads and displays correct information" classname="adminui.spec.js" time="2.514">
+<failure message="adminui.spec.js:9:7 AdminUI Dashboard loads and displays correct information" type="FAILURE">
+<![CDATA[  [Mobile Safari] › adminui.spec.js:9:7 › IdentityServer + AdminUI Docker Setup › AdminUI Dashboard loads and displays correct information 
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: locator('text=3')
+    Expected: visible
+    Error: strict mode violation: locator('text=3') resolved to 2 elements:
+        1) <h4>3</h4> aka getByRole('heading', { name: '3' })
+        2) <td>https://localhost:5003</td> aka getByRole('cell', { name: 'https://localhost:5003' })
+
+    Call log:
+      - Expect "toBeVisible" with timeout 10000ms
+      - waiting for locator('text=3')
+
+
+      16 |     
+      17 |     // Verify statistics cards
+    > 18 |     await expect(page.locator('text=3')).toBeVisible(); // Clients count
+         |                                          ^
+      19 |     await expect(page.locator('text=Clients')).toBeVisible();
+      20 |     await expect(page.locator('text=1')).toBeVisible(); // API Scopes count
+      21 |     await expect(page.locator('text=API Scopes')).toBeVisible();
+        at C:\Temp\repos\IdentityServerInDocker\tests\adminui.spec.js:18:42
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\adminui-IdentityServer-Adm-2e269-isplays-correct-information-Mobile-Safari\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\adminui-IdentityServer-Adm-2e269-isplays-correct-information-Mobile-Safari\error-context.md
+]]>
+</failure>
+<system-out>
+<![CDATA[
+[[ATTACHMENT|test-results\adminui-IdentityServer-Adm-2e269-isplays-correct-information-Mobile-Safari\test-failed-1.png]]
+
+[[ATTACHMENT|test-results\adminui-IdentityServer-Adm-2e269-isplays-correct-information-Mobile-Safari\error-context.md]]
+]]>
+</system-out>
+</testcase>
+<testcase name="IdentityServer + AdminUI Docker Setup › IdentityServer welcome page loads and has correct links" classname="adminui.spec.js" time="1.575">
+<failure message="adminui.spec.js:41:7 IdentityServer welcome page loads and has correct links" type="FAILURE">
+<![CDATA[  [Mobile Safari] › adminui.spec.js:41:7 › IdentityServer + AdminUI Docker Setup › IdentityServer welcome page loads and has correct links 
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: locator('text=Discovery Document')
+    Expected: visible
+    Error: strict mode violation: locator('text=Discovery Document') resolved to 2 elements:
+        1) <h5 class="card-title">Discovery Document</h5> aka getByRole('heading', { name: 'Discovery Document' })
+        2) <p class="card-text">View the OpenID Connect discovery document</p> aka getByText('View the OpenID Connect')
+
+    Call log:
+      - Expect "toBeVisible" with timeout 10000ms
+      - waiting for locator('text=Discovery Document')
+
+
+      49 |     
+      50 |     // Verify sections
+    > 51 |     await expect(page.locator('text=Discovery Document')).toBeVisible();
+         |                                                           ^
+      52 |     await expect(page.locator('text=View the OpenID Connect discovery document')).toBeVisible();
+      53 |     await expect(page.locator('text=Admin UI')).toBeVisible();
+      54 |     await expect(page.locator('text=Manage clients, resources, and configuration')).toBeVisible();
+        at C:\Temp\repos\IdentityServerInDocker\tests\adminui.spec.js:51:59
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\adminui-IdentityServer-Adm-e10ee-loads-and-has-correct-links-Mobile-Safari\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\adminui-IdentityServer-Adm-e10ee-loads-and-has-correct-links-Mobile-Safari\error-context.md
+]]>
+</failure>
+<system-out>
+<![CDATA[
+[[ATTACHMENT|test-results\adminui-IdentityServer-Adm-e10ee-loads-and-has-correct-links-Mobile-Safari\test-failed-1.png]]
+
+[[ATTACHMENT|test-results\adminui-IdentityServer-Adm-e10ee-loads-and-has-correct-links-Mobile-Safari\error-context.md]]
+]]>
+</system-out>
+</testcase>
+</testsuite>
+<testsuite name="adminui.spec.js" timestamp="2025-11-11T16:54:52.987Z" hostname="Microsoft Edge" tests="2" failures="2" skipped="0" time="2.804" errors="0">
+<testcase name="IdentityServer + AdminUI Docker Setup › AdminUI Dashboard loads and displays correct information" classname="adminui.spec.js" time="1.943">
+<failure message="adminui.spec.js:9:7 AdminUI Dashboard loads and displays correct information" type="FAILURE">
+<![CDATA[  [Microsoft Edge] › adminui.spec.js:9:7 › IdentityServer + AdminUI Docker Setup › AdminUI Dashboard loads and displays correct information 
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: locator('text=3')
+    Expected: visible
+    Error: strict mode violation: locator('text=3') resolved to 2 elements:
+        1) <h4>3</h4> aka getByRole('heading', { name: '3' })
+        2) <td>https://localhost:5003</td> aka getByRole('cell', { name: 'https://localhost:5003' })
+
+    Call log:
+      - Expect "toBeVisible" with timeout 10000ms
+      - waiting for locator('text=3')
+
+
+      16 |     
+      17 |     // Verify statistics cards
+    > 18 |     await expect(page.locator('text=3')).toBeVisible(); // Clients count
+         |                                          ^
+      19 |     await expect(page.locator('text=Clients')).toBeVisible();
+      20 |     await expect(page.locator('text=1')).toBeVisible(); // API Scopes count
+      21 |     await expect(page.locator('text=API Scopes')).toBeVisible();
+        at C:\Temp\repos\IdentityServerInDocker\tests\adminui.spec.js:18:42
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\adminui-IdentityServer-Adm-2e269-isplays-correct-information-Microsoft-Edge\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\adminui-IdentityServer-Adm-2e269-isplays-correct-information-Microsoft-Edge\error-context.md
+]]>
+</failure>
+<system-out>
+<![CDATA[
+[[ATTACHMENT|test-results\adminui-IdentityServer-Adm-2e269-isplays-correct-information-Microsoft-Edge\test-failed-1.png]]
+
+[[ATTACHMENT|test-results\adminui-IdentityServer-Adm-2e269-isplays-correct-information-Microsoft-Edge\error-context.md]]
+]]>
+</system-out>
+</testcase>
+<testcase name="IdentityServer + AdminUI Docker Setup › IdentityServer welcome page loads and has correct links" classname="adminui.spec.js" time="0.861">
+<failure message="adminui.spec.js:41:7 IdentityServer welcome page loads and has correct links" type="FAILURE">
+<![CDATA[  [Microsoft Edge] › adminui.spec.js:41:7 › IdentityServer + AdminUI Docker Setup › IdentityServer welcome page loads and has correct links 
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: locator('text=Discovery Document')
+    Expected: visible
+    Error: strict mode violation: locator('text=Discovery Document') resolved to 2 elements:
+        1) <h5 class="card-title">Discovery Document</h5> aka getByRole('heading', { name: 'Discovery Document' })
+        2) <p class="card-text">View the OpenID Connect discovery document</p> aka getByText('View the OpenID Connect')
+
+    Call log:
+      - Expect "toBeVisible" with timeout 10000ms
+      - waiting for locator('text=Discovery Document')
+
+
+      49 |     
+      50 |     // Verify sections
+    > 51 |     await expect(page.locator('text=Discovery Document')).toBeVisible();
+         |                                                           ^
+      52 |     await expect(page.locator('text=View the OpenID Connect discovery document')).toBeVisible();
+      53 |     await expect(page.locator('text=Admin UI')).toBeVisible();
+      54 |     await expect(page.locator('text=Manage clients, resources, and configuration')).toBeVisible();
+        at C:\Temp\repos\IdentityServerInDocker\tests\adminui.spec.js:51:59
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\adminui-IdentityServer-Adm-e10ee-loads-and-has-correct-links-Microsoft-Edge\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\adminui-IdentityServer-Adm-e10ee-loads-and-has-correct-links-Microsoft-Edge\error-context.md
+]]>
+</failure>
+<system-out>
+<![CDATA[
+[[ATTACHMENT|test-results\adminui-IdentityServer-Adm-e10ee-loads-and-has-correct-links-Microsoft-Edge\test-failed-1.png]]
+
+[[ATTACHMENT|test-results\adminui-IdentityServer-Adm-e10ee-loads-and-has-correct-links-Microsoft-Edge\error-context.md]]
+]]>
+</system-out>
+</testcase>
+</testsuite>
+<testsuite name="adminui.spec.js" timestamp="2025-11-11T16:54:52.987Z" hostname="Google Chrome" tests="2" failures="2" skipped="0" time="2.909" errors="0">
+<testcase name="IdentityServer + AdminUI Docker Setup › AdminUI Dashboard loads and displays correct information" classname="adminui.spec.js" time="1.783">
+<failure message="adminui.spec.js:9:7 AdminUI Dashboard loads and displays correct information" type="FAILURE">
+<![CDATA[  [Google Chrome] › adminui.spec.js:9:7 › IdentityServer + AdminUI Docker Setup › AdminUI Dashboard loads and displays correct information 
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: locator('text=3')
+    Expected: visible
+    Error: strict mode violation: locator('text=3') resolved to 2 elements:
+        1) <h4>3</h4> aka getByRole('heading', { name: '3' })
+        2) <td>https://localhost:5003</td> aka getByRole('cell', { name: 'https://localhost:5003' })
+
+    Call log:
+      - Expect "toBeVisible" with timeout 10000ms
+      - waiting for locator('text=3')
+
+
+      16 |     
+      17 |     // Verify statistics cards
+    > 18 |     await expect(page.locator('text=3')).toBeVisible(); // Clients count
+         |                                          ^
+      19 |     await expect(page.locator('text=Clients')).toBeVisible();
+      20 |     await expect(page.locator('text=1')).toBeVisible(); // API Scopes count
+      21 |     await expect(page.locator('text=API Scopes')).toBeVisible();
+        at C:\Temp\repos\IdentityServerInDocker\tests\adminui.spec.js:18:42
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\adminui-IdentityServer-Adm-2e269-isplays-correct-information-Google-Chrome\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\adminui-IdentityServer-Adm-2e269-isplays-correct-information-Google-Chrome\error-context.md
+]]>
+</failure>
+<system-out>
+<![CDATA[
+[[ATTACHMENT|test-results\adminui-IdentityServer-Adm-2e269-isplays-correct-information-Google-Chrome\test-failed-1.png]]
+
+[[ATTACHMENT|test-results\adminui-IdentityServer-Adm-2e269-isplays-correct-information-Google-Chrome\error-context.md]]
+]]>
+</system-out>
+</testcase>
+<testcase name="IdentityServer + AdminUI Docker Setup › IdentityServer welcome page loads and has correct links" classname="adminui.spec.js" time="1.126">
+<failure message="adminui.spec.js:41:7 IdentityServer welcome page loads and has correct links" type="FAILURE">
+<![CDATA[  [Google Chrome] › adminui.spec.js:41:7 › IdentityServer + AdminUI Docker Setup › IdentityServer welcome page loads and has correct links 
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: locator('text=Discovery Document')
+    Expected: visible
+    Error: strict mode violation: locator('text=Discovery Document') resolved to 2 elements:
+        1) <h5 class="card-title">Discovery Document</h5> aka getByRole('heading', { name: 'Discovery Document' })
+        2) <p class="card-text">View the OpenID Connect discovery document</p> aka getByText('View the OpenID Connect')
+
+    Call log:
+      - Expect "toBeVisible" with timeout 10000ms
+      - waiting for locator('text=Discovery Document')
+
+
+      49 |     
+      50 |     // Verify sections
+    > 51 |     await expect(page.locator('text=Discovery Document')).toBeVisible();
+         |                                                           ^
+      52 |     await expect(page.locator('text=View the OpenID Connect discovery document')).toBeVisible();
+      53 |     await expect(page.locator('text=Admin UI')).toBeVisible();
+      54 |     await expect(page.locator('text=Manage clients, resources, and configuration')).toBeVisible();
+        at C:\Temp\repos\IdentityServerInDocker\tests\adminui.spec.js:51:59
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\adminui-IdentityServer-Adm-e10ee-loads-and-has-correct-links-Google-Chrome\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\adminui-IdentityServer-Adm-e10ee-loads-and-has-correct-links-Google-Chrome\error-context.md
+]]>
+</failure>
+<system-out>
+<![CDATA[
+[[ATTACHMENT|test-results\adminui-IdentityServer-Adm-e10ee-loads-and-has-correct-links-Google-Chrome\test-failed-1.png]]
+
+[[ATTACHMENT|test-results\adminui-IdentityServer-Adm-e10ee-loads-and-has-correct-links-Google-Chrome\error-context.md]]
+]]>
+</system-out>
 </testcase>
 </testsuite>
 </testsuites>

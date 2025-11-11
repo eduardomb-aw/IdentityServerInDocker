@@ -197,15 +197,96 @@ new Client
 
 ## 🐳 Docker Deployment
 
-### Building the Container
-```bash
-docker build -t identityserver4-app -f docker/Dockerfile .
+### Option 1: Use Published Images (Recommended)
+
+#### Quick Production Deployment
+```powershell
+# Deploy using published images from GitHub Container Registry
+.\scripts\deploy.ps1 -Mode prod -Pull
 ```
 
-### Running with Docker Compose
+#### Manual Deployment
 ```bash
-docker-compose -f docker/docker-compose.yml up
+# Pull the latest images
+docker pull ghcr.io/eduardomb-aw/identityserverindocker-identityserver:latest
+docker pull ghcr.io/eduardomb-aw/identityserverindocker-adminui:latest
+
+# Run with production compose file
+docker-compose -f docker-compose.prod.yml up -d
 ```
+
+### Option 2: Build Locally
+
+#### Building the Containers
+```bash
+# Build both services
+docker-compose build
+
+# Or build individually
+docker build -t identityserver4-app -f src/IdentityServer/Dockerfile .
+docker build -t adminui-app -f src/AdminUI/Dockerfile .
+```
+
+#### Running with Docker Compose
+```bash
+# Development mode (builds from source)
+docker-compose up -d
+
+# Production mode (uses published images)  
+docker-compose -f docker-compose.prod.yml up -d
+```
+
+## 🚀 CI/CD Pipeline
+
+### Automated Builds
+
+This project includes comprehensive GitHub Actions workflows that automatically:
+
+- ✅ **Build multi-architecture Docker images** (linux/amd64, linux/arm64)
+- ✅ **Publish to GitHub Container Registry** (ghcr.io)
+- ✅ **Run comprehensive Playwright tests** on pull requests
+- ✅ **Support semantic versioning** via Git tags
+
+### Published Images
+
+```bash
+# IdentityServer image
+ghcr.io/eduardomb-aw/identityserverindocker-identityserver:latest
+
+# AdminUI image  
+ghcr.io/eduardomb-aw/identityserverindocker-adminui:latest
+```
+
+### Deployment Scripts
+
+#### Quick Deployment
+```powershell
+# Deploy latest production images
+.\scripts\deploy.ps1 -Mode prod -Pull
+
+# Deploy specific version
+.\scripts\deploy.ps1 -Mode prod -Tag v1.2.3 -Pull
+
+# Clean up resources
+.\scripts\deploy.ps1 -Clean
+```
+
+#### Health Checks
+```powershell
+# Check service health
+Invoke-WebRequest https://localhost:5001/health -SkipCertificateCheck
+Invoke-WebRequest https://localhost:5003/health -SkipCertificateCheck
+```
+
+### 📋 Pipeline Features
+
+- **Automated Testing**: Full Playwright test suite runs on every PR
+- **Multi-platform Builds**: Support for AMD64 and ARM64 architectures  
+- **Smart Tagging**: Automatic versioning based on Git tags and branches
+- **Security Scanning**: Container vulnerability analysis
+- **Health Monitoring**: Built-in health check endpoints
+
+For detailed CI/CD documentation, see [docs/CICD.md](docs/CICD.md).
 
 ## 🔒 Security Considerations
 
