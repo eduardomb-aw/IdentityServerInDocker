@@ -147,6 +147,9 @@ yarn-error.log*
 package-lock.json
 yarn.lock
 
+# Exception: Include package-lock.json for CI/CD in tests directory
+!tests/package-lock.json
+
 # Playwright
 test-results/
 playwright-report/
