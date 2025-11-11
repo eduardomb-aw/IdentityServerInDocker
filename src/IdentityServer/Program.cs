@@ -33,7 +33,7 @@ try
     builder.Services.AddIdentityServer()
         .AddInMemoryIdentityResources(GetIdentityResources())
         .AddInMemoryApiScopes(GetApiScopes())
-        .AddInMemoryClients(GetClients())
+        .AddInMemoryClients(GetClients(builder.Configuration))
         .AddDeveloperSigningCredential();
 
     // Add CORS
@@ -95,12 +95,20 @@ static IEnumerable<IdentityServer4.Models.ApiScope> GetApiScopes()
 {
     return new List<IdentityServer4.Models.ApiScope>
     {
-        new IdentityServer4.Models.ApiScope("api1", "My API")
+        new IdentityServer4.Models.ApiScope("api1", "My API"),
+                new IdentityServer4.Models.ApiScope("amlink-maintenance-api", "AM Link Maintenance API"),
+        new IdentityServer4.Models.ApiScope("amlink-submission-api", "AM Link Submission API"),
+        new IdentityServer4.Models.ApiScope("amlink-policy-api", "AM Link Policy API"),
+        new IdentityServer4.Models.ApiScope("amlink-doc-api", "AM Link Document API"),
+        new IdentityServer4.Models.ApiScope("amwins-graphadapter-api", "AM Wins Graph Adapter API"),
     };
 }
 
-static IEnumerable<Client> GetClients()
+static IEnumerable<Client> GetClients(IConfiguration configuration)
 {
+    // Get the Document Management client secret from User Secrets or fallback
+    var docMgmtSecret = configuration["DocumentManagement:ClientSecret"] ?? "YOUR_CLIENT_SECRET_HERE";
+    
     return new List<Client>
     {
         // Machine to machine client
@@ -133,6 +141,42 @@ static IEnumerable<Client> GetClients()
             AllowedScopes = { "openid", "profile", "api1" },
             RequireConsent = false,
             AllowAccessTokensViaBrowser = true
-        }
+        },
+        // Document Management client
+        new Client
+        {
+            ClientId = "doc-mgmt-client",
+            ClientName = "Document Management System",
+            AllowedGrantTypes = GrantTypes.Code,
+            
+            // Client secrets for secure communication - loaded from User Secrets
+            ClientSecrets = { new Secret(docMgmtSecret.Sha256()) },
+            
+            // Redirect URIs for OAuth callback
+            RedirectUris = { "http://localhost:1180/callback" },
+            PostLogoutRedirectUris = { "http://localhost:1180/logout" },
+            
+            // Allowed scopes for AM Link APIs
+            AllowedScopes = { 
+                "openid", 
+                "profile",
+                "amlink-maintenance-api",
+                "amlink-submission-api", 
+                "amlink-policy-api",
+                "amlink-doc-api",
+                "amwins-graphadapter-api"
+            },
+            
+            // OAuth settings
+            RequireConsent = false,
+            AllowAccessTokensViaBrowser = true,
+            AllowOfflineAccess = true, // Enable refresh tokens
+            
+            // Token lifetimes (in seconds)
+            AccessTokenLifetime = 3600, // 1 hour
+            RefreshTokenUsage = TokenUsage.ReUse,
+            RefreshTokenExpiration = TokenExpiration.Sliding,
+            SlidingRefreshTokenLifetime = 1296000, // 15 days
+        },
     };
 }
