@@ -1,5 +1,7 @@
 # IdentityServer4 + AdminUI Docker Setup
 
+[![Build and Push Docker Images](https://github.com/eduardomb-aw/IdentityServerInDocker/actions/workflows/docker-build.yml/badge.svg)](https://github.com/eduardomb-aw/IdentityServerInDocker/actions/workflows/docker-build.yml)
+
 A complete containerized solution featuring **IdentityServer4** as an OAuth 2.0/OpenID Connect provider and a custom **AdminUI** for managing clients, scopes, and resources. Both services run in Docker containers and are accessible from the host machine.
 
 ## 🚀 Quick Start
