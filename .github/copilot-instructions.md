@@ -79,6 +79,11 @@ Critical scripts in `scripts/`:
 - `start-docker.ps1` / `stop-docker.ps1` - Container lifecycle
 - `test-auth-flows.ps1` - OAuth client credentials + authorization code flows
 
+## Commit Message Style
+- Keep commit messages short and concise
+- Use imperative mood (e.g., "Add feature" not "Added feature")
+- Focus on what changed, not why (details go in PR descriptions)
+
 ## Docker Configurations
 
 ### Development (`docker-compose.yml`)

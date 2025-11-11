@@ -4,6 +4,7 @@
     <TargetFramework>net8.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
+    <UserSecretsId>IdentityServerInDocker-92c32b8a-4b89-4c7a-8c9f-2a1b3c4d5e6f</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
