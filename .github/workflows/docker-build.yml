@@ -118,8 +118,6 @@ jobs:
       uses: actions/setup-node@v4
       with:
         node-version: '18'
-        cache: 'npm'
-        cache-dependency-path: './tests/package-lock.json'
 
     - name: Install Playwright dependencies
       working-directory: tests
@@ -129,7 +127,8 @@ jobs:
 
     - name: Generate development certificates
       run: |
-        dotnet dev-certs https -ep ~/.aspnet/https/aspnetapp.pfx -p password --trust
+        mkdir -p ~/.aspnet/https
+        dotnet dev-certs https -ep ~/.aspnet/https/aspnetapp.pfx -p password
 
     - name: Start services with docker compose
       run: |
