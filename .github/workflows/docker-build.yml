@@ -127,14 +127,32 @@ jobs:
         npm ci
         npx playwright install --with-deps
 
-    - name: Generate development certificates
+    - name: Create a simple docker-compose override for CI
       run: |
-        mkdir -p ~/.aspnet/https
-        dotnet dev-certs https -ep ~/.aspnet/https/aspnetapp.pfx -p password
+        cat > docker-compose.ci.yml << 'EOF'
+        version: '3.8'
+        services:
+          identityserver:
+            environment:
+              - ASPNETCORE_ENVIRONMENT=Development
+              - ASPNETCORE_URLS=http://+:5000
+            ports:
+              - "5000:5000"
+            volumes: []
+            
+          adminui:
+            environment:
+              - ASPNETCORE_ENVIRONMENT=Development  
+              - ASPNETCORE_URLS=http://+:5002
+              - IdentityServerSettings__BaseUrl=http://identityserver:5000
+            ports:
+              - "5002:5002"
+            volumes: []
+        EOF
 
     - name: Start services with docker compose
       run: |
-        docker compose up -d
+        docker compose -f docker-compose.yml -f docker-compose.ci.yml up -d
         sleep 30
 
     - name: Wait for services to be healthy
@@ -146,12 +164,15 @@ jobs:
         echo "Checking AdminUI logs..."
         docker compose logs adminui --tail 20
         echo "Waiting for IdentityServer health check..."
-        timeout 90 bash -c 'until curl -k -f https://localhost:5001/health > /dev/null 2>&1; do sleep 2; done'
+        timeout 90 bash -c 'until curl -f http://localhost:5000/health > /dev/null 2>&1; do sleep 2; done'
         echo "Waiting for AdminUI health check..."
-        timeout 90 bash -c 'until curl -k -f https://localhost:5003/health > /dev/null 2>&1; do sleep 2; done'
+        timeout 90 bash -c 'until curl -f http://localhost:5002/health > /dev/null 2>&1; do sleep 2; done'
 
     - name: Run Playwright tests
       working-directory: tests
+      env:
+        IDENTITY_SERVER_URL: http://localhost:5000
+        ADMIN_UI_URL: http://localhost:5002
       run: npx playwright test
 
     - name: Upload Playwright report
