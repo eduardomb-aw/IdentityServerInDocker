@@ -4,11 +4,17 @@
 
 import { test, expect } from '@playwright/test';
 
+// Configuration for different environments
+const CONFIG = {
+  identityServerUrl: process.env.IDENTITY_SERVER_URL || 'https://localhost:5001',
+  adminUiUrl: process.env.ADMIN_UI_URL || 'https://localhost:5003'
+};
+
 test.describe('IdentityServer + AdminUI Docker Setup', () => {
   
   test('AdminUI Dashboard loads and displays correct information', async ({ page }) => {
     // Navigate to AdminUI
-    await page.goto('https://localhost:5003/');
+    await page.goto(CONFIG.adminUiUrl);
     
     // Verify page title and main content
     await expect(page).toHaveTitle(/Dashboard - Identity Server Admin UI/);

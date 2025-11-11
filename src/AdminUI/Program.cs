@@ -29,6 +29,7 @@ try
     // Add services to the container
     builder.Services.AddRazorPages();
     builder.Services.AddControllersWithViews();
+    builder.Services.AddHealthChecks();
 
     var identityServerBaseUrl = builder.Configuration["IdentityServerOptions:BaseUrl"] ?? "https://localhost:5001";
 
@@ -103,8 +104,9 @@ try
         name: "default",
         pattern: "{controller=Home}/{action=Index}/{id?}");
 
-    // Add a simple health check endpoint
-    app.MapGet("/health", () => Results.Ok(new { 
+    // Add health check endpoints
+    app.MapHealthChecks("/health");
+    app.MapGet("/health/detailed", () => Results.Ok(new { 
         status = "healthy", 
         service = "AdminUI", 
         timestamp = DateTime.UtcNow,
