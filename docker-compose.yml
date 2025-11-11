@@ -1,0 +1,55 @@
+version: '3.8'
+
+services:
+  identityserver:
+    build:
+      context: .
+      dockerfile: src/IdentityServer/Dockerfile
+    container_name: identityserver-main
+    hostname: identityserver
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=https://+:5001;http://+:5000
+      - ASPNETCORE_HTTPS_PORT=5001
+      - ASPNETCORE_Kestrel__Certificates__Default__Password=password
+      - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/identityserver.pfx
+      - DOTNET_RUNNING_IN_CONTAINER=true
+    ports:
+      - "5000:5000"
+      - "5001:5001"
+    volumes:
+      - ./certs:/https:ro
+      - ./logs/identityserver:/app/logs
+    networks:
+      - identityserver-network
+    restart: unless-stopped
+
+  adminui:
+    build:
+      context: .
+      dockerfile: src/AdminUI/Dockerfile
+    container_name: identityserver-adminui
+    hostname: adminui
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=https://+:5003;http://+:5002
+      - ASPNETCORE_HTTPS_PORT=5003
+      - ASPNETCORE_Kestrel__Certificates__Default__Password=password
+      - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/identityserver.pfx
+      - IdentityServerOptions__BaseUrl=http://identityserver:5000
+      - DOTNET_RUNNING_IN_CONTAINER=true
+    ports:
+      - "5002:5002"
+      - "5003:5003"
+    volumes:
+      - ./certs:/https:ro
+      - ./logs/adminui:/app/logs
+    depends_on:
+      - identityserver
+    networks:
+      - identityserver-network
+    restart: unless-stopped
+
+networks:
+  identityserver-network:
+    driver: bridge

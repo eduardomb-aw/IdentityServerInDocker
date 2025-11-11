@@ -1,0 +1,141 @@
+@{
+    ViewData["Title"] = "Dashboard";
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <h1>Identity Server Admin Dashboard</h1>
+        <p class="lead">Manage your Identity Server configuration</p>
+    </div>
+</div>
+
+<div class="row mt-4">
+    <div class="col-md-3">
+        <div class="card bg-primary text-white">
+            <div class="card-body">
+                <div class="d-flex justify-content-between">
+                    <div>
+                        <h4>@ViewBag.ClientCount</h4>
+                        <p>Clients</p>
+                    </div>
+                    <div class="align-self-center">
+                        <i class="bi bi-people fs-1"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="card-footer">
+                <a href="/Clients" class="text-white text-decoration-none">
+                    View Details <i class="bi bi-arrow-right"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-3">
+        <div class="card bg-success text-white">
+            <div class="card-body">
+                <div class="d-flex justify-content-between">
+                    <div>
+                        <h4>@ViewBag.ApiScopeCount</h4>
+                        <p>API Scopes</p>
+                    </div>
+                    <div class="align-self-center">
+                        <i class="bi bi-key fs-1"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="card-footer">
+                <a href="#" class="text-white text-decoration-none">
+                    View Details <i class="bi bi-arrow-right"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-3">
+        <div class="card bg-info text-white">
+            <div class="card-body">
+                <div class="d-flex justify-content-between">
+                    <div>
+                        <h4>@ViewBag.IdentityResourceCount</h4>
+                        <p>Identity Resources</p>
+                    </div>
+                    <div class="align-self-center">
+                        <i class="bi bi-person-badge fs-1"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="card-footer">
+                <a href="#" class="text-white text-decoration-none">
+                    View Details <i class="bi bi-arrow-right"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-3">
+        <div class="card bg-warning text-white">
+            <div class="card-body">
+                <div class="d-flex justify-content-between">
+                    <div>
+                        <h4>@ViewBag.ApiResourceCount</h4>
+                        <p>API Resources</p>
+                    </div>
+                    <div class="align-self-center">
+                        <i class="bi bi-cloud fs-1"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="card-footer">
+                <a href="#" class="text-white text-decoration-none">
+                    View Details <i class="bi bi-arrow-right"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row mt-5">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">
+                <h5><i class="bi bi-info-circle"></i> Quick Actions</h5>
+            </div>
+            <div class="card-body">
+                <a href="/Clients" class="btn btn-primary me-2">
+                    <i class="bi bi-people"></i> Manage Clients
+                </a>
+                <a href="https://localhost:5001/.well-known/openid-configuration" target="_blank" class="btn btn-secondary me-2">
+                    <i class="bi bi-gear"></i> View Discovery
+                </a>
+                <a href="https://localhost:5001" target="_blank" class="btn btn-success">
+                    <i class="bi bi-box-arrow-up-right"></i> Open Identity Server
+                </a>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">
+                <h5><i class="bi bi-info-circle"></i> System Information</h5>
+            </div>
+            <div class="card-body">
+                <table class="table table-sm">
+                    <tr>
+                        <td><strong>Identity Server URL:</strong></td>
+                        <td><a href="https://localhost:5001" target="_blank">https://localhost:5001</a></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Admin UI URL:</strong></td>
+                        <td>https://localhost:5003</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Database:</strong></td>
+                        <td>SQL Server</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

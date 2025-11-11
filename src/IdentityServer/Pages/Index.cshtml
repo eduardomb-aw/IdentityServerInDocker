@@ -1,0 +1,31 @@
+@page
+@model IdentityServer.Pages.IndexModel
+@{
+    ViewData["Title"] = "Identity Server";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Identity Server</h1>
+    <p>Welcome to Identity Server - Your authentication and authorization service.</p>
+    
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Discovery Document</h5>
+                    <p class="card-text">View the OpenID Connect discovery document</p>
+                    <a href="/.well-known/openid_configuration" class="btn btn-primary" target="_blank">View Discovery</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Admin UI</h5>
+                    <p class="card-text">Manage clients, resources, and configuration</p>
+                    <a href="https://localhost:5003" class="btn btn-success" target="_blank">Open Admin UI</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

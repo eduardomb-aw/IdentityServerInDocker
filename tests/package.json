@@ -1,0 +1,17 @@
+{
+  "name": "identityserver-docker-tests",
+  "version": "1.0.0",
+  "description": "End-to-end tests for IdentityServer + AdminUI Docker setup",
+  "scripts": {
+    "test": "playwright test",
+    "test:headed": "playwright test --headed",
+    "test:debug": "playwright test --debug",
+    "test:ui": "playwright test --ui",
+    "test:report": "playwright show-report"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.40.0"
+  },
+  "author": "IdentityServer Docker Project",
+  "license": "MIT"
+}
