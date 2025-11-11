@@ -139,8 +139,16 @@ jobs:
 
     - name: Wait for services to be healthy
       run: |
-        timeout 60 bash -c 'until curl -k -f https://localhost:5001/health > /dev/null 2>&1; do sleep 2; done'
-        timeout 60 bash -c 'until curl -k -f https://localhost:5003/health > /dev/null 2>&1; do sleep 2; done'
+        echo "Checking container status..."
+        docker compose ps
+        echo "Checking IdentityServer logs..."
+        docker compose logs identityserver --tail 20
+        echo "Checking AdminUI logs..."
+        docker compose logs adminui --tail 20
+        echo "Waiting for IdentityServer health check..."
+        timeout 90 bash -c 'until curl -k -f https://localhost:5001/health > /dev/null 2>&1; do sleep 2; done'
+        echo "Waiting for AdminUI health check..."
+        timeout 90 bash -c 'until curl -k -f https://localhost:5003/health > /dev/null 2>&1; do sleep 2; done'
 
     - name: Run Playwright tests
       working-directory: tests
