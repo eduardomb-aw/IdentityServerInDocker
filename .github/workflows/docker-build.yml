@@ -136,6 +136,9 @@ jobs:
             environment:
               - ASPNETCORE_ENVIRONMENT=Development
               - ASPNETCORE_URLS=http://+:5000
+              - DOTNET_RUNNING_IN_CONTAINER=true
+              - ASPNETCORE_Kestrel__Certificates__Default__Password=
+              - ASPNETCORE_Kestrel__Certificates__Default__Path=
             ports:
               - "5000:5000"
             volumes: []
@@ -145,8 +148,11 @@ jobs:
               - ASPNETCORE_ENVIRONMENT=Development  
               - ASPNETCORE_URLS=http://+:5002
               - IdentityServerSettings__BaseUrl=http://identityserver:5000
+              - DOTNET_RUNNING_IN_CONTAINER=true
+              - ASPNETCORE_Kestrel__Certificates__Default__Password=
+              - ASPNETCORE_Kestrel__Certificates__Default__Path=
             ports:
-              - "5002:5002"
+              - "5002:5002" 
             volumes: []
         EOF
 
