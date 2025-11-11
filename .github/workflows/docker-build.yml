@@ -119,7 +119,7 @@ jobs:
       with:
         node-version: '18'
         cache: 'npm'
-        cache-dependency-path: tests/package-lock.json
+        cache-dependency-path: './tests/package-lock.json'
 
     - name: Install Playwright dependencies
       working-directory: tests
@@ -127,15 +127,19 @@ jobs:
         npm ci
         npx playwright install --with-deps
 
-    - name: Start services with docker-compose
+    - name: Generate development certificates
       run: |
-        docker-compose up -d
+        dotnet dev-certs https -ep ~/.aspnet/https/aspnetapp.pfx -p password --trust
+
+    - name: Start services with docker compose
+      run: |
+        docker compose up -d
         sleep 30
 
     - name: Wait for services to be healthy
       run: |
         timeout 60 bash -c 'until curl -k -f https://localhost:5001/health > /dev/null 2>&1; do sleep 2; done'
-        timeout 60 bash -c 'until curl -f https://localhost:5002/health > /dev/null 2>&1; do sleep 2; done'
+        timeout 60 bash -c 'until curl -k -f https://localhost:5003/health > /dev/null 2>&1; do sleep 2; done'
 
     - name: Run Playwright tests
       working-directory: tests
@@ -151,4 +155,4 @@ jobs:
 
     - name: Stop services
       if: always()
-      run: docker-compose down -v
+      run: docker compose down -v
