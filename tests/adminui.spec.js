@@ -243,4 +243,3 @@ test.describe('Known Issues Documentation', () => {
     expect(discoveryDoc.issuer).toBe('https://localhost:5001');
   });
 });
-});
