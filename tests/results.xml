@@ -1,0 +1,6 @@
+<testsuites id="" name="" tests="1" failures="0" skipped="0" errors="0" time="2.49954">
+<testsuite name="adminui.spec.js" timestamp="2025-11-11T16:49:44.821Z" hostname="chromium" tests="1" failures="0" skipped="0" time="0.864" errors="0">
+<testcase name="IdentityServer + AdminUI Docker Setup › IdentityServer discovery link works correctly (Issue #5)" classname="adminui.spec.js" time="0.864">
+</testcase>
+</testsuite>
+</testsuites>
