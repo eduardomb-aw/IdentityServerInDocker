@@ -127,7 +127,23 @@ jobs:
         npm ci
         npx playwright install --with-deps
 
-    - name: Create a simple docker-compose override for CI
+    - name: Set up .NET SDK
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: '8.0.x'
+
+    - name: Generate development certificates for CI
+      run: |
+        # Create certs directory
+        mkdir -p ./certs
+        
+        # Generate development certificate
+        dotnet dev-certs https -ep ./certs/aspnetapp.pfx -p TestPassword123
+        
+        # Make sure the certificate file has proper permissions
+        chmod 644 ./certs/aspnetapp.pfx
+
+    - name: Create docker-compose override for CI with certificates
       run: |
         cat > docker-compose.ci.yml << 'EOF'
         version: '3.8'
@@ -135,27 +151,29 @@ jobs:
           identityserver:
             environment:
               - ASPNETCORE_ENVIRONMENT=Development
-              - ASPNETCORE_URLS=http://+:5000
+              - ASPNETCORE_URLS=http://+:5000;https://+:5001
               - DOTNET_RUNNING_IN_CONTAINER=true
-              - ASPNETCORE_HTTPS_PORT=
-              - ASPNETCORE_Kestrel__Certificates__Default__Password=
-              - ASPNETCORE_Kestrel__Certificates__Default__Path=
+              - ASPNETCORE_Kestrel__Certificates__Default__Password=TestPassword123
+              - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/aspnetapp.pfx
             ports:
               - "5000:5000"
-            volumes: []
+              - "5001:5001"
+            volumes:
+              - ./certs:/https:ro
             
           adminui:
             environment:
               - ASPNETCORE_ENVIRONMENT=Development  
-              - ASPNETCORE_URLS=http://+:5002
-              - IdentityServerSettings__BaseUrl=http://identityserver:5000
+              - ASPNETCORE_URLS=http://+:5002;https://+:5003
+              - IdentityServerSettings__BaseUrl=https://identityserver:5001
               - DOTNET_RUNNING_IN_CONTAINER=true
-              - ASPNETCORE_HTTPS_PORT=
-              - ASPNETCORE_Kestrel__Certificates__Default__Password=
-              - ASPNETCORE_Kestrel__Certificates__Default__Path=
+              - ASPNETCORE_Kestrel__Certificates__Default__Password=TestPassword123
+              - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/aspnetapp.pfx
             ports:
-              - "5002:5002" 
-            volumes: []
+              - "5002:5002"
+              - "5003:5003" 
+            volumes:
+              - ./certs:/https:ro
         EOF
 
     - name: Start services with docker compose
@@ -172,15 +190,15 @@ jobs:
         echo "Checking AdminUI logs..."
         docker compose logs adminui --tail 20
         echo "Waiting for IdentityServer health check..."
-        timeout 90 bash -c 'until curl -f http://localhost:5000/health > /dev/null 2>&1; do sleep 2; done'
+        timeout 90 bash -c 'until curl -f -k https://localhost:5001/health > /dev/null 2>&1; do sleep 2; done'
         echo "Waiting for AdminUI health check..."
-        timeout 90 bash -c 'until curl -f http://localhost:5002/health > /dev/null 2>&1; do sleep 2; done'
+        timeout 90 bash -c 'until curl -f -k https://localhost:5003/health > /dev/null 2>&1; do sleep 2; done'
 
     - name: Run Playwright tests
       working-directory: tests
       env:
-        IDENTITY_SERVER_URL: http://localhost:5000
-        ADMIN_UI_URL: http://localhost:5002
+        IDENTITY_SERVER_URL: https://localhost:5001
+        ADMIN_UI_URL: https://localhost:5003
       run: npx playwright test
 
     - name: Upload Playwright report
