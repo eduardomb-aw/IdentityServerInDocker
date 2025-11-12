@@ -28,7 +28,9 @@ namespace IdentityServer.Controllers
         [HttpGet]
         public async Task<IActionResult> Login(string returnUrl)
         {
-            ViewData["ReturnUrl"] = returnUrl;
+            // Validate returnUrl to prevent XSS attacks
+            var safeReturnUrl = _interaction.IsValidReturnUrl(returnUrl) ? returnUrl : "~";
+            ViewData["ReturnUrl"] = safeReturnUrl;
             return View();
         }
 
@@ -36,11 +38,14 @@ namespace IdentityServer.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Login(string username, string password, string returnUrl)
         {
+            // Validate returnUrl to prevent XSS attacks
+            var safeReturnUrl = _interaction.IsValidReturnUrl(returnUrl) ? returnUrl : "~";
+            
             // Input validation
             if (string.IsNullOrWhiteSpace(username) || string.IsNullOrWhiteSpace(password))
             {
                 ViewData["Error"] = "Username and password are required";
-                ViewData["ReturnUrl"] = returnUrl;
+                ViewData["ReturnUrl"] = safeReturnUrl;
                 return View();
             }
 
@@ -78,7 +83,7 @@ namespace IdentityServer.Controllers
             await _events.RaiseAsync(new UserLoginFailureEvent(username, "invalid credentials"));
             
             ViewData["Error"] = "Invalid username or password";
-            ViewData["ReturnUrl"] = returnUrl;
+            ViewData["ReturnUrl"] = safeReturnUrl;
             return View();
         }
 
