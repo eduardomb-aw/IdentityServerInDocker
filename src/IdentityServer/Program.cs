@@ -189,7 +189,7 @@ static IEnumerable<Client> GetClients(IConfiguration configuration)
             RequireConsent = false,
             AllowAccessTokensViaBrowser = true,
             AllowOfflineAccess = true, // Enable refresh tokens
-            RequirePkce = false, // Disable PKCE for testing (not recommended for production)
+            RequirePkce = true, // PKCE enabled for security (recommended for production)
             
             // Token lifetimes (in seconds)
             AccessTokenLifetime = 3600, // 1 hour
