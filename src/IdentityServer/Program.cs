@@ -31,6 +31,13 @@ try
     builder.Services.AddRazorPages();
     builder.Services.AddControllersWithViews();
     builder.Services.AddHealthChecks();
+    
+    // Add anti-forgery token support
+    builder.Services.AddAntiforgery(options =>
+    {
+        options.Cookie.SecurePolicy = CookieSecurePolicy.SameAsRequest;
+        options.Cookie.SameSite = SameSiteMode.Strict;
+    });
 
     // Add IdentityServer4 with minimal required resources
     builder.Services.AddIdentityServer()
@@ -195,19 +202,27 @@ static IEnumerable<Client> GetClients(IConfiguration configuration)
 
 static List<TestUser> GetUsers()
 {
+    // WARNING: This is for development/testing only!
+    // In production, use proper user management with:
+    // - Secure password hashing (bcrypt, Argon2, etc.)
+    // - User database (Entity Framework, Identity, etc.)
+    // - Account lockout and rate limiting
+    // - Strong password policies
+    
     return new List<TestUser>
     {
         new TestUser
         {
             SubjectId = "1",
             Username = "testuser",
-            Password = "password",
+            Password = "password", // TODO: Use hashed passwords in production
             Claims = new List<Claim>
             {
                 new Claim("given_name", "Test"),
                 new Claim("family_name", "User"),
                 new Claim("email", "test@example.com"),
-                new Claim("email_verified", "true")
+                new Claim("email_verified", "true"),
+                new Claim("role", "user")
             }
         }
     };

@@ -29,9 +29,19 @@ namespace IdentityServer.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Login(string username, string password, string returnUrl)
         {
-            // Simple hardcoded check for demo purposes
+            // Input validation
+            if (string.IsNullOrWhiteSpace(username) || string.IsNullOrWhiteSpace(password))
+            {
+                ViewData["Error"] = "Username and password are required";
+                ViewData["ReturnUrl"] = returnUrl;
+                return View();
+            }
+
+            // Simple hardcoded check for demo/development purposes only
+            // TODO: Replace with proper user authentication service in production
             if (username == "testuser" && password == "password")
             {
                 var user = new ClaimsPrincipal(new ClaimsIdentity(new[]
@@ -53,6 +63,9 @@ namespace IdentityServer.Controllers
                 return Redirect("~");
             }
 
+            // Log failed login attempt (in production, implement proper logging and rate limiting)
+            await _events.RaiseAsync(new UserLoginFailureEvent(username, "invalid credentials"));
+            
             ViewData["Error"] = "Invalid username or password";
             ViewData["ReturnUrl"] = returnUrl;
             return View();

@@ -17,9 +17,10 @@
     <h2>IdentityServer Login</h2>
     
     <div class="info">
-        <strong>Test Credentials:</strong><br>
+        <strong>Development/Test Environment</strong><br>
         Username: <code>testuser</code><br>
-        Password: <code>password</code>
+        Password: <code>password</code><br>
+        <small><em>Note: This is a test login for development purposes only.</em></small>
     </div>
 
     @if (ViewData["Error"] != null)
@@ -28,14 +29,16 @@
     }
 
     <form method="post">
+        @Html.AntiForgeryToken()
+        
         <div class="form-group">
             <label for="username">Username:</label>
-            <input type="text" id="username" name="username" required />
+            <input type="text" id="username" name="username" required maxlength="100" autocomplete="username" />
         </div>
         
         <div class="form-group">
             <label for="password">Password:</label>
-            <input type="password" id="password" name="password" required />
+            <input type="password" id="password" name="password" required maxlength="100" autocomplete="current-password" />
         </div>
 
         <input type="hidden" name="returnUrl" value="@ViewData["ReturnUrl"]" />
