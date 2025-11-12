@@ -125,7 +125,6 @@ static IEnumerable<Client> GetClients(IConfiguration configuration)
 {
     // Get the Document Management client secret from User Secrets or fallback
     var docMgmtSecret = configuration["DocumentManagement:ClientSecret"] ?? "YOUR_CLIENT_SECRET_HERE";
-    Log.Information("Loading Document Management client with secret: {SecretLength} characters", docMgmtSecret?.Length ?? 0);
     
     var clients = new List<Client>
     {
