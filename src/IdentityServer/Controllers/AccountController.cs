@@ -48,7 +48,19 @@ namespace IdentityServer.Controllers
             if (_users.ValidateCredentials(username, password))
             {
                 var user = _users.FindByUsername(username);
-                var principal = new ClaimsPrincipal(new ClaimsIdentity(user.Claims, "cookie", "name", "role"));
+                
+                // Use the claims from TestUserStore instead of manually constructing them
+                // This ensures consistency with claims defined in Program.cs GetUsers()
+                var claims = new List<Claim>
+                {
+                    new Claim("sub", user.SubjectId),
+                    new Claim("name", username)
+                };
+                
+                // Add all claims from the TestUser configuration
+                claims.AddRange(user.Claims);
+                
+                var principal = new ClaimsPrincipal(new ClaimsIdentity(claims, "cookie", "name", "role"));
 
                 await HttpContext.SignInAsync("idsrv", principal);
 
