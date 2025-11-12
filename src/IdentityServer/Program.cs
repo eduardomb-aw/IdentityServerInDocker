@@ -40,11 +40,14 @@ try
     });
 
     // Add IdentityServer4 with minimal required resources
+    var testUsers = GetUsers();
+    builder.Services.AddSingleton(new TestUserStore(testUsers));
+    
     builder.Services.AddIdentityServer()
         .AddInMemoryIdentityResources(GetIdentityResources())
         .AddInMemoryApiScopes(GetApiScopes())
         .AddInMemoryClients(GetClients(builder.Configuration))
-        .AddTestUsers(GetUsers())
+        .AddTestUsers(testUsers)
         .AddDeveloperSigningCredential();
 
     // Add CORS

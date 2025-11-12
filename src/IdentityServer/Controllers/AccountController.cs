@@ -3,6 +3,7 @@ using IdentityServer4.Services;
 using IdentityServer4.Models;
 using IdentityServer4.Extensions;
 using IdentityServer4.Events;
+using IdentityServer4.Test;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Authentication;
 
@@ -12,13 +13,16 @@ namespace IdentityServer.Controllers
     {
         private readonly IIdentityServerInteractionService _interaction;
         private readonly IEventService _events;
+        private readonly TestUserStore _users;
 
         public AccountController(
             IIdentityServerInteractionService interaction,
-            IEventService events)
+            IEventService events,
+            TestUserStore users)
         {
             _interaction = interaction;
             _events = events;
+            _users = users;
         }
 
         [HttpGet]
@@ -40,20 +44,15 @@ namespace IdentityServer.Controllers
                 return View();
             }
 
-            // Simple hardcoded check for demo/development purposes only
-            // TODO: Replace with proper user authentication service in production
-            if (username == "testuser" && password == "password")
+            // Authenticate against configured TestUsers
+            if (_users.ValidateCredentials(username, password))
             {
-                var user = new ClaimsPrincipal(new ClaimsIdentity(new[]
-                {
-                    new Claim("sub", "1"),
-                    new Claim("name", "Test User"),
-                    new Claim("email", "test@example.com")
-                }, "cookie"));
+                var user = _users.FindByUsername(username);
+                var principal = new ClaimsPrincipal(new ClaimsIdentity(user.Claims, "cookie", "name", "role"));
 
-                await HttpContext.SignInAsync("idsrv", user);
+                await HttpContext.SignInAsync("idsrv", principal);
 
-                await _events.RaiseAsync(new UserLoginSuccessEvent(username, "1", username));
+                await _events.RaiseAsync(new UserLoginSuccessEvent(username, user.SubjectId, username));
 
                 if (_interaction.IsValidReturnUrl(returnUrl))
                 {
