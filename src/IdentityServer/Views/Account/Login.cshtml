@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>IdentityServer - Login</title>
+    <style>
+        body { font-family: Arial, sans-serif; max-width: 400px; margin: 100px auto; padding: 20px; }
+        .form-group { margin-bottom: 15px; }
+        label { display: block; margin-bottom: 5px; font-weight: bold; }
+        input[type="text"], input[type="password"] { width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px; }
+        button { background-color: #007bff; color: white; padding: 10px 20px; border: none; border-radius: 4px; cursor: pointer; width: 100%; }
+        button:hover { background-color: #0056b3; }
+        .error { color: red; margin-bottom: 15px; }
+        .info { background: #e7f3ff; padding: 10px; border-radius: 4px; margin-bottom: 15px; border-left: 4px solid #007bff; }
+    </style>
+</head>
+<body>
+    <h2>IdentityServer Login</h2>
+    
+    <div class="info">
+        <strong>Development/Test Environment</strong><br>
+        Username: <code>testuser</code><br>
+        Password: <code>password</code><br>
+        <small><em>Note: This is a test login for development purposes only.</em></small>
+    </div>
+
+    @if (ViewData["Error"] != null)
+    {
+        <div class="error">@ViewData["Error"]</div>
+    }
+
+    <form method="post">
+        @Html.AntiForgeryToken()
+        
+        <div class="form-group">
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username" required maxlength="100" autocomplete="username" />
+        </div>
+        
+        <div class="form-group">
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" required maxlength="100" autocomplete="current-password" />
+        </div>
+
+        <input type="hidden" name="returnUrl" value="@ViewData["ReturnUrl"]" />
+        
+        <button type="submit">Login</button>
+    </form>
+</body>
+</html>

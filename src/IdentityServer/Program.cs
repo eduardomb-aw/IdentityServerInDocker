@@ -1,6 +1,8 @@
 using Serilog;
 using IdentityServer4.Models;
 using IdentityServer4;
+using IdentityServer4.Test;
+using System.Security.Claims;
 
 Log.Logger = new LoggerConfiguration()
     .WriteTo.Console()
@@ -27,13 +29,25 @@ try
 
     // Add services to the container
     builder.Services.AddRazorPages();
+    builder.Services.AddControllersWithViews();
     builder.Services.AddHealthChecks();
+    
+    // Add anti-forgery token support
+    builder.Services.AddAntiforgery(options =>
+    {
+        options.Cookie.SecurePolicy = CookieSecurePolicy.SameAsRequest;
+        options.Cookie.SameSite = SameSiteMode.Strict;
+    });
 
     // Add IdentityServer4 with minimal required resources
+    var testUsers = GetUsers();
+    builder.Services.AddSingleton(new TestUserStore(testUsers));
+    
     builder.Services.AddIdentityServer()
         .AddInMemoryIdentityResources(GetIdentityResources())
         .AddInMemoryApiScopes(GetApiScopes())
         .AddInMemoryClients(GetClients(builder.Configuration))
+        .AddTestUsers(testUsers)
         .AddDeveloperSigningCredential();
 
     // Add CORS
@@ -68,6 +82,9 @@ try
     
     app.UseAuthorization();
     app.MapRazorPages();
+    app.MapControllerRoute(
+        name: "default",
+        pattern: "{controller=Home}/{action=Index}/{id?}");
     app.MapHealthChecks("/health");
 
     Log.Information("Starting IdentityServer4...");
@@ -109,7 +126,7 @@ static IEnumerable<Client> GetClients(IConfiguration configuration)
     // Get the Document Management client secret from User Secrets or fallback
     var docMgmtSecret = configuration["DocumentManagement:ClientSecret"] ?? "YOUR_CLIENT_SECRET_HERE";
     
-    return new List<Client>
+    var clients = new List<Client>
     {
         // Machine to machine client
         new Client
@@ -147,7 +164,7 @@ static IEnumerable<Client> GetClients(IConfiguration configuration)
         {
             ClientId = "doc-mgmt-client",
             ClientName = "Document Management System",
-            AllowedGrantTypes = GrantTypes.Code,
+            AllowedGrantTypes = GrantTypes.CodeAndClientCredentials, // Allow both flows
             
             // Client secrets for secure communication - loaded from User Secrets
             ClientSecrets = { new Secret(docMgmtSecret.Sha256()) },
@@ -171,6 +188,7 @@ static IEnumerable<Client> GetClients(IConfiguration configuration)
             RequireConsent = false,
             AllowAccessTokensViaBrowser = true,
             AllowOfflineAccess = true, // Enable refresh tokens
+            RequirePkce = true, // PKCE enabled for security (recommended for production)
             
             // Token lifetimes (in seconds)
             AccessTokenLifetime = 3600, // 1 hour
@@ -178,5 +196,36 @@ static IEnumerable<Client> GetClients(IConfiguration configuration)
             RefreshTokenExpiration = TokenExpiration.Sliding,
             SlidingRefreshTokenLifetime = 1296000, // 15 days
         },
+    };
+    
+    Log.Information("Loaded {ClientCount} clients: {ClientIds}", clients.Count, string.Join(", ", clients.Select(c => c.ClientId)));
+    return clients;
+}
+
+static List<TestUser> GetUsers()
+{
+    // WARNING: This is for development/testing only!
+    // In production, use proper user management with:
+    // - Secure password hashing (bcrypt, Argon2, etc.)
+    // - User database (Entity Framework, Identity, etc.)
+    // - Account lockout and rate limiting
+    // - Strong password policies
+    
+    return new List<TestUser>
+    {
+        new TestUser
+        {
+            SubjectId = "1",
+            Username = "testuser",
+            Password = "password", // TODO: Use hashed passwords in production
+            Claims = new List<Claim>
+            {
+                new Claim("given_name", "Test"),
+                new Claim("family_name", "User"),
+                new Claim("email", "test@example.com"),
+                new Claim("email_verified", "true"),
+                new Claim("role", "user")
+            }
+        }
     };
 }
